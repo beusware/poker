@@ -4,8 +4,8 @@
   "description": "",
   "main": "src/app.ts",
   "scripts": {
-    "build": "webpack && pug-cli frontend/src/views/ -o frontend/dist/views/",
-    "test": "npm run build && sudo nodemon build/app.js"
+    "build": "webpack && pug frontend/src/views/ -o frontend/dist/views/",
+    "test": "npm run build && nodemon backend/build/app.js"
   },
   "repository": {
     "type": "git",
@@ -25,10 +25,12 @@
     "socket.io-client": "^4.5.1"
   },
   "devDependencies": {
+    "@types/express": "^4.17.13",
     "@types/ip": "^1.1.0",
     "@types/node": "^17.0.40",
     "@types/socket.io": "^3.0.2",
     "babel-loader": "^8.2.5",
+    "nodemon": "^2.0.16",
     "pug-cli": "^1.0.0-alpha6",
     "raw-loader": "^4.0.2",
     "ts-loader": "^9.3.0",
