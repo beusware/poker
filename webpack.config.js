@@ -34,7 +34,7 @@ const backendConfig = {
   },
   output: {
     filename: "[name].js",
-    path: path.resolve(__dirname, "build/"),
+    path: path.resolve(__dirname, "backend/build/"),
   },
   resolve: resolveExtensions,
   module: moduleRules,
@@ -44,19 +44,16 @@ const backendConfig = {
 const frontendConfig = {
   mode: mode,
   entry: {
-    cloud: [
-      "./frontend/src/cloud.ts",
+    lobby: [
+      "./frontend/src/logic/lobby.ts",
     ],
-    poker: [
-      "./frontend/src/poker.ts",
-    ],
-    dashboard: [
-      "./frontend/src/dashboard.ts",
+    table: [
+      "./frontend/src/logic/table.ts",
     ],
   },
   output: {
     filename: "[name].js",
-    path: path.resolve(__dirname, "frontend/public/scripts/"),
+    path: path.resolve(__dirname, "frontend/dist/logic/"),
   },
   resolve: resolveExtensions,
   module: moduleRules,
