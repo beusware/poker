@@ -4,7 +4,8 @@ import * as express from "express";
 import { Server } from "socket.io";
 
 import { router } from "./router";
-import { Game } from "./game";
+import { Game } from "./models/game_class";
+import { Message } from "./models/message_class";
 import * as constants from "./constants";
 
 const app = express.default();
@@ -26,7 +27,7 @@ io.on("connection", (socket: any) => {
   console.log(`ID: "${socket.id}" connected the server.`)
   let name: string = names[counter];
   counter++;
-  game.join(socket.id, name);
+  game.join(socket.id, name, clientInteraction);
 
   socket.on("disconnect", () => {
     console.log(`ID: "${socket.id}" disconnected the server.`)
@@ -38,3 +39,25 @@ io.on("connection", (socket: any) => {
 server.listen(constants.HTTP_PORT, () => {
   console.log(`info`, `Webserver`, `Webserver ist in Betrieb unter http://${ip.address()}:${constants.HTTP_PORT}/`);
 });
+
+// interactions that the Plyer_Class does with the client
+const clientInteraction = {
+  // send a message to a single client
+  message: (socketId: string, messageObject: Message) => {
+    io.to(socketId).emit("appendMessage", messageObject);
+  },
+  // send to the player whose turn is
+  yourTurn: (socketId: string) => {
+    // TODO: implement on clientsite
+    io.to(socketId).emit("yourTurn");
+  }
+};
+
+// interactions that the Game_Class does with the client
+const gameInteraction = {
+  // send a message to every player
+  message: (messageObject: Message) => {
+    io.emit("appendMessage", messageObject);
+  }
+};
+game.clientInteraction = gameInteraction;
